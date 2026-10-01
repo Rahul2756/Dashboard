@@ -11,6 +11,7 @@ import { Employee } from '../types';
 import { CONFIG } from '../config';
 import { TeamBifurcationCard } from '../components/TeamBifurcationCard';
 import { CustomDropdown } from '../components/CustomDropdown';
+import { EmployeeModal } from '../components/EmployeeModal';
 
 export const DataProcessing: React.FC = () => {
   const [data, setData] = useState<Employee[]>([]);
@@ -30,6 +31,9 @@ export const DataProcessing: React.FC = () => {
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  
+  // Modal State
+  const [selectedEmployee, setSelectedEmployee] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -173,7 +177,17 @@ export const DataProcessing: React.FC = () => {
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}
+        onRowClick={setSelectedEmployee}
       />
+      
+      {selectedEmployee && (
+        <EmployeeModal 
+          employeeName={selectedEmployee}
+          allDataByDate={allDataByDate}
+          availableDates={availableDates}
+          onClose={() => setSelectedEmployee(null)}
+        />
+      )}
     </div>
   );
 };

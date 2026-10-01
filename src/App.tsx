@@ -3,7 +3,7 @@ import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { DataProcessing } from './pages/DataProcessing';
 import { UnderProgress } from './components/UnderProgress';
-
+import { ProjectUpdate } from './pages/ProjectUpdate';
 function App() {
   const [activeSection, setActiveSection] = useState(1);
   const [lastUpdated, setLastUpdated] = useState(new Date().toLocaleString());
@@ -20,7 +20,7 @@ function App() {
       case 2:
         return <UnderProgress title="2. TraNac Update" />;
       case 3:
-        return <UnderProgress title="3. E-NEXCO Pavement Analysis Update" />;
+        return <ProjectUpdate />;
       case 4:
         return <UnderProgress title="4. HiRATE Status" />;
       case 5:

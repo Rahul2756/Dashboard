@@ -10,6 +10,7 @@ interface AllocationTableProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  onRowClick?: (employeeName: string) => void;
 }
 
 export const AllocationTable: React.FC<AllocationTableProps> = ({
@@ -17,7 +18,8 @@ export const AllocationTable: React.FC<AllocationTableProps> = ({
   allFilteredData,
   currentPage,
   totalPages,
-  onPageChange
+  onPageChange,
+  onRowClick
 }) => {
   const handleExport = () => {
     // Export the ALL filtered dataset rather than blindly exporting all records,
@@ -76,7 +78,12 @@ export const AllocationTable: React.FC<AllocationTableProps> = ({
           <tbody>
             {data.length > 0 ? (
               data.map((row, index) => (
-                <tr key={row.id || index}>
+                <tr 
+                  key={row.id || index} 
+                  onClick={() => onRowClick && onRowClick(row.name)}
+                  style={onRowClick ? { cursor: 'pointer' } : {}}
+                  className={onRowClick ? 'clickable-row' : ''}
+                >
                   <td>{row.sNo}</td>
                   <td>{row.name}</td>
                   <td>{row.workType}</td>

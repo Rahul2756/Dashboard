@@ -10,16 +10,16 @@ interface KPICardProps {
 
 export const KPICard: React.FC<KPICardProps> = ({ title, value, secondaryText, Icon }) => {
   return (
-    <div className="kpi-card">
-      <div className="kpi-header">
-        <div className="kpi-icon-wrapper">
-          <Icon size={20} strokeWidth={1.5} />
+    <div className="summary-card">
+      <div className="sc-header">
+        <span className="sc-label">{title}</span>
+        <div className="sc-icon">
+          <Icon size={18} strokeWidth={2} />
         </div>
-        <h3 className="kpi-title">{title}</h3>
       </div>
       <div>
-        <div className="kpi-value">{value}</div>
-        {secondaryText && <div className="kpi-secondary">{secondaryText}</div>}
+        <div className="sc-value">{value}</div>
+        {secondaryText && <div style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', marginTop: '0.5rem', fontWeight: 500 }}>{secondaryText}</div>}
       </div>
     </div>
   );

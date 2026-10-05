@@ -193,39 +193,39 @@ export const ProjectUpdate: React.FC = () => {
       {/* Dashboard Summary Cards */}
       <div className="summary-grid">
         <div className="summary-card">
-          <div className="sc-icon"><MapPin size={20} /></div>
-          <div className="sc-content">
-            <span className="sc-value">{summary.total}</span>
+          <div className="sc-header">
             <span className="sc-label">Total Projects</span>
+            <div className="sc-icon"><MapPin size={18} /></div>
           </div>
+          <span className="sc-value">{summary.total}</span>
         </div>
         <div className="summary-card">
-          <div className="sc-icon"><CheckCircle size={20} /></div>
-          <div className="sc-content">
-            <span className="sc-value">{summary.completed}</span>
+          <div className="sc-header">
             <span className="sc-label">Reports Completed</span>
+            <div className="sc-icon"><CheckCircle size={18} /></div>
           </div>
+          <span className="sc-value">{summary.completed}</span>
         </div>
         <div className="summary-card">
-          <div className="sc-icon"><Activity size={20} /></div>
-          <div className="sc-content">
-            <span className="sc-value">{summary.inProgress}</span>
+          <div className="sc-header">
             <span className="sc-label">In Progress</span>
+            <div className="sc-icon"><Activity size={18} /></div>
           </div>
+          <span className="sc-value">{summary.inProgress}</span>
         </div>
         <div className="summary-card" style={{ borderBottom: '3px solid var(--color-primary-light)' }}>
-          <div className="sc-icon"><ListChecks size={20} /></div>
-          <div className="sc-content">
-            <span className="sc-value">{summary.onTime}</span>
+          <div className="sc-header">
             <span className="sc-label">Completed On Time</span>
+            <div className="sc-icon"><ListChecks size={18} /></div>
           </div>
+          <span className="sc-value">{summary.onTime}</span>
         </div>
         <div className="summary-card" style={{ borderBottom: '3px solid var(--color-danger-text)' }}>
-          <div className="sc-icon"><AlertCircle size={20} /></div>
-          <div className="sc-content">
-            <span className="sc-value">{summary.delayed + summary.overdue}</span>
+          <div className="sc-header">
             <span className="sc-label">Delayed / Overdue</span>
+            <div className="sc-icon"><AlertCircle size={18} /></div>
           </div>
+          <span className="sc-value">{summary.delayed + summary.overdue}</span>
         </div>
       </div>
 
@@ -249,7 +249,7 @@ export const ProjectUpdate: React.FC = () => {
       {/* Project Header */}
       <div className="project-header-card">
         <div className="ph-title-row">
-          <Route size={24} color="var(--color-primary)" />
+          <Route size={24} color="#FFFFFF" />
           <h3>PROJECT: {selectedProject.projectName}</h3>
         </div>
         <div className="ph-stats">

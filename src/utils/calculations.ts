@@ -58,3 +58,37 @@ export const getWorkTypeDistribution = (data: Employee[]): WorkTypeDistribution[
     color: colors[name] || fallbackColors[index % fallbackColors.length]
   }));
 };
+
+export const getSystemUtilizationBreakdown = (data: Employee[]): WorkTypeDistribution[] => {
+  const excludedSystemRoles = ['safety', 'accounts', 'r&d lab', 'coding', 'ai'];
+  const presentData = data.filter(e => 
+    e.status === 'Present' && 
+    e.workType && 
+    e.workType !== 'Unknown' &&
+    !excludedSystemRoles.includes(e.workType.toLowerCase())
+  );
+  
+  const counts = presentData.reduce((acc, curr) => {
+    acc[curr.workType] = (acc[curr.workType] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const colors: Record<string, string> = {
+    'E-NEXCO': '#0ea5e9',
+    'HiRATE': '#8b5cf6',
+    'TraNac': '#10b981',
+    'Coding': '#a855f7',
+    'AI': '#a855f7',
+    'Accounts': '#f59e0b',
+    'Safety Team': '#14b8a6',
+    'R&D Lab': '#94a3b8'
+  };
+
+  const fallbackColors = ['#0ea5e9', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#14b8a6', '#6366f1'];
+
+  return Object.entries(counts).map(([name, value], index) => ({
+    name,
+    value,
+    color: colors[name] || fallbackColors[index % fallbackColors.length]
+  }));
+};

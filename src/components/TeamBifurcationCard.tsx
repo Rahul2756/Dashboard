@@ -21,34 +21,34 @@ export const TeamBifurcationCard: React.FC<TeamBifurcationCardProps> = ({ totalT
         </div>
         <div className="bifurcation-title-container">
           <div className="bifurcation-title">Total Data Processing Team</div>
-          <div className="bifurcation-total">{totalTeam} Nos.</div>
+          <div className="bifurcation-total">{totalTeam}</div>
         </div>
       </div>
       
       <div className="bifurcation-rows">
         <div className="bifurcation-row row-safety">
           <span className="row-label">Safety Team</span>
-          <span className="row-value">{safetyCount} Nos.</span>
+          <span className="row-value">{safetyCount}</span>
         </div>
         
         <div className="bifurcation-row row-accounts">
           <span className="row-label">Accounts</span>
-          <span className="row-value">{accountsCount} Nos.</span>
+          <span className="row-value">{accountsCount}</span>
         </div>
         
         <div className="bifurcation-row row-ai">
           <span className="row-label">AI</span>
-          <span className="row-value">{codingCount} Nos.</span>
+          <span className="row-value">{codingCount}</span>
         </div>
         
         <div className="bifurcation-row row-rd">
           <span className="row-label">R&D Lab</span>
-          <span className="row-value">{rdCount} Nos.</span>
+          <span className="row-value">{rdCount}</span>
         </div>
         
         <div className="bifurcation-row row-main">
           <span className="row-label">E-NEXCO / HIRATE / TraNac</span>
-          <span className="row-value">{remainingCount} Nos.</span>
+          <span className="row-value">{remainingCount}</span>
         </div>
       </div>
     </div>

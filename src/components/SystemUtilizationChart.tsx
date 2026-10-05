@@ -1,15 +1,16 @@
 import React from 'react';
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
 
 interface SystemUtilizationChartProps {
   occupied: number;
   vacant: number;
   total: number;
+  breakdown: { name: string; value: number; color: string }[];
 }
 
-export const SystemUtilizationChart: React.FC<SystemUtilizationChartProps> = ({ occupied, vacant, total }) => {
+export const SystemUtilizationChart: React.FC<SystemUtilizationChartProps> = ({ occupied, vacant, total, breakdown }) => {
   const data = [
-    { name: 'Occupied', value: occupied, color: '#3b82f6' },
+    ...breakdown,
     { name: 'Vacant', value: vacant, color: '#e5e7eb' }
   ];
 
@@ -45,7 +46,7 @@ export const SystemUtilizationChart: React.FC<SystemUtilizationChartProps> = ({ 
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
-              <CustomCenterLabel />
+              <Label content={CustomCenterLabel} position="center" />
             </Pie>
             <Tooltip 
               formatter={(value: number) => [`${value} Systems`, 'Count']}
@@ -53,11 +54,11 @@ export const SystemUtilizationChart: React.FC<SystemUtilizationChartProps> = ({ 
             />
             <Legend 
               verticalAlign="bottom" 
-              height={36}
               iconType="circle"
-              formatter={(value, _entry: any) => (
-                <span style={{ color: 'var(--color-text-primary)', fontWeight: 500, marginRight: '10px' }}>
-                  {value}
+              wrapperStyle={{ paddingTop: '15px' }}
+              formatter={(value, entry: any) => (
+                <span style={{ color: 'var(--color-text-primary)', fontWeight: 500, marginRight: '5px' }}>
+                  {value} — {entry.payload.value}
                 </span>
               )}
             />

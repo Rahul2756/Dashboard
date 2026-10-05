@@ -5,7 +5,7 @@ import { WorkTypeChart } from '../components/WorkTypeChart';
 import { SystemUtilizationChart } from '../components/SystemUtilizationChart';
 import { FilterBar } from '../components/FilterBar';
 import { AllocationTable } from '../components/AllocationTable';
-import { calculateMetrics, getWorkTypeDistribution } from '../utils/calculations';
+import { calculateMetrics, getWorkTypeDistribution, getSystemUtilizationBreakdown } from '../utils/calculations';
 import { loadExcelData } from '../services/excelParser';
 import { Employee } from '../types';
 import { CONFIG } from '../config';
@@ -88,6 +88,7 @@ export const DataProcessing: React.FC = () => {
   // Metrics based on overall data (not just filtered)
   const metrics = useMemo(() => calculateMetrics(data, CONFIG.totalSeats, CONFIG.totalSystems), [data]);
   const workTypeData = useMemo(() => getWorkTypeDistribution(data), [data]);
+  const systemBreakdownData = useMemo(() => getSystemUtilizationBreakdown(data), [data]);
   const workTypes = useMemo(() => {
     const types = new Set(data.map(d => d.workType).filter(t => t));
     return Array.from(types).sort();
@@ -159,6 +160,7 @@ export const DataProcessing: React.FC = () => {
           occupied={metrics.occupiedSystems} 
           vacant={metrics.vacantSystems} 
           total={metrics.totalSystems} 
+          breakdown={systemBreakdownData}
         />
       </div>
 

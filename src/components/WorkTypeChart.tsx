@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
 import { WorkTypeDistribution } from '../types';
 
 interface WorkTypeChartProps {
@@ -41,7 +41,7 @@ export const WorkTypeChart: React.FC<WorkTypeChartProps> = ({ data, total }) => 
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
-              <CustomCenterLabel />
+              <Label content={CustomCenterLabel} position="center" />
             </Pie>
             <Tooltip 
               formatter={(value: number) => [`${value} People`, 'Count']}
@@ -49,10 +49,10 @@ export const WorkTypeChart: React.FC<WorkTypeChartProps> = ({ data, total }) => 
             />
             <Legend 
               verticalAlign="bottom" 
-              height={36}
               iconType="circle"
+              wrapperStyle={{ paddingTop: '15px' }}
               formatter={(value, entry: any) => (
-                <span style={{ color: 'var(--color-text-primary)', fontWeight: 500, marginRight: '10px' }}>
+                <span style={{ color: 'var(--color-text-primary)', fontWeight: 500, marginRight: '5px' }}>
                   {value} — {entry.payload.value}
                 </span>
               )}

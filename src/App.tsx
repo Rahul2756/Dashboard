@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { DataProcessing } from './pages/DataProcessing';
 import { UnderProgress } from './components/UnderProgress';
 import { ProjectUpdate } from './pages/ProjectUpdate';
+import { TranacUpdate } from './pages/TranacUpdate';
 function App() {
   const [activeSection, setActiveSection] = useState(1);
   const [lastUpdated, setLastUpdated] = useState(new Date().toLocaleString());
@@ -18,7 +19,7 @@ function App() {
       case 1:
         return <DataProcessing />;
       case 2:
-        return <UnderProgress title="2. TraNac Update" />;
+        return <TranacUpdate refreshTrigger={lastUpdated} />;
       case 3:
         return <ProjectUpdate />;
       case 4:

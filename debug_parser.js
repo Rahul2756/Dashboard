@@ -22,28 +22,28 @@ export const normalizeName = (name) => {
 export const normalizeWorkType = (value) => {
   if (!value) return '';
   const lower = value.trim().toLowerCase();
-  
+
   if (WORK_TYPE_MAP[lower]) {
     return WORK_TYPE_MAP[lower];
   }
-  
+
   return lower.charAt(0).toUpperCase() + lower.slice(1);
 };
 
 export const normalizeStatus = (value) => {
   if (!value) return 'Unknown';
-  
+
   const lower = value.trim().toLowerCase();
-  
+
   if (lower === 'p') return 'Present';
   if (lower === 'l') return 'Absent';
   if (lower === 'h') return 'Holiday';
-  
+
   const normalizedWork = normalizeWorkType(lower);
   if (KNOWN_WORK_ASSIGNMENTS.includes(normalizedWork.toLowerCase()) || KNOWN_WORK_ASSIGNMENTS.includes(lower)) {
     return 'Present';
   }
-  
+
   return 'Unknown';
 };
 
@@ -53,7 +53,7 @@ const workbook = XLSX.read(buf, { type: 'buffer' });
 
 const getLatestMonthSheet = (sheetNames) => {
   const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-  
+
   let latestSheet = null;
   let latestDate = 0;
 
@@ -63,7 +63,7 @@ const getLatestMonthSheet = (sheetNames) => {
     if (parts.length >= 2) {
       const monthStr = parts[0].substring(0, 3);
       const yearStr = parts[1];
-      
+
       const monthIdx = months.indexOf(monthStr);
       if (monthIdx !== -1 && !isNaN(parseInt(yearStr))) {
         const dateVal = parseInt(yearStr) * 100 + monthIdx;
@@ -74,7 +74,7 @@ const getLatestMonthSheet = (sheetNames) => {
       }
     }
   }
-  
+
   return latestSheet;
 };
 
@@ -104,11 +104,11 @@ const stopWords = ['leave', 'paid leave', 'holiday', 'present', 'total', 'paymen
 for (let c = nameColIdx + 1; c < headerRow.length; c++) {
   const cell = headerRow[c];
   if (cell === undefined || cell === null) continue;
-  
+
   if (typeof cell === 'string' && stopWords.includes(cell.trim().toLowerCase())) {
     break;
   }
-  
+
   if (typeof cell === 'number') {
     dateColIndices.push(c);
   }
@@ -155,7 +155,7 @@ for (let r = headerRowIdx + 1; r < data.length; r++) {
 
   const rawDailyValue = row[latestPopulatedDateColIdx] ? String(row[latestPopulatedDateColIdx]).trim() : '';
   const status = normalizeStatus(rawDailyValue);
-  
+
   employees.push({ name: rawName, status, rawDailyValue });
 }
 

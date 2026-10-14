@@ -141,7 +141,7 @@ export const DataProcessing: React.FC = () => {
         />
         <KPICard 
           title="People Present" 
-          value={metrics.peoplePresent} 
+          value={`${metrics.peoplePresent} / ${totalNames}`} 
           secondaryText={`${Math.round((metrics.peoplePresent / Math.max(1, totalNames)) * 100)}% occupancy`}
           Icon={Users} 
         />
@@ -180,6 +180,11 @@ export const DataProcessing: React.FC = () => {
         totalPages={totalPages}
         onPageChange={setCurrentPage}
         onRowClick={setSelectedEmployee}
+        availableDates={availableDates}
+        allDataByDate={allDataByDate}
+        allData={data}
+        onWorkTypeFilter={setWorkTypeFilter}
+        activeWorkType={workTypeFilter}
       />
       
       {selectedEmployee && (

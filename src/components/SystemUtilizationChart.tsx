@@ -8,7 +8,7 @@ interface SystemUtilizationChartProps {
   breakdown: { name: string; value: number; color: string }[];
 }
 
-export const SystemUtilizationChart: React.FC<SystemUtilizationChartProps> = ({ occupied, vacant, total, breakdown }) => {
+export const SystemUtilizationChart: React.FC<SystemUtilizationChartProps> = ({ vacant, total, breakdown }) => {
   const data = [
     ...breakdown,
     { name: 'Vacant', value: vacant, color: '#e5e7eb' }

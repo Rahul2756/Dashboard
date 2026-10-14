@@ -1,0 +1,747 @@
+/* ==========================================================================
+   HiRATE Project-Wise Daily Workforce & Rating Timeline Styles
+   Corporate Highway Signboard & Asset Rating Dashboard
+   ========================================================================== */
+
+.hirate-detailed-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* 1. Section Header & Dropdown */
+.hirate-section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding-bottom: 0.5rem;
+}
+
+.hirate-section-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.hirate-section-tag {
+  font-size: 0.725rem;
+  font-weight: 800;
+  color: #1D4ED8;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hirate-section-main-heading {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.hirate-section-subtitle {
+  font-size: 0.85rem;
+  color: #64748B;
+  margin: 0;
+}
+
+.hirate-dropdown-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+/* 2. Hero Project Header Card */
+.hirate-project-hero-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.04), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+}
+
+.hirate-hero-banner {
+  padding: 2rem 1.75rem;
+  background: linear-gradient(135deg, #1C3D5A 0%, #0F2337 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.hirate-hero-road-svg {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 320px;
+  height: 200px;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.hirate-hero-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hirate-hero-project-info {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.hirate-hero-icon-box {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+}
+
+.hirate-hero-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.hirate-hero-subtitle {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 0.35rem;
+}
+
+.hirate-hero-stage-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.hirate-hero-stage-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  border: 1px solid transparent;
+}
+
+.hirate-hero-stage-badge.badge-completed {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34D399;
+  border-color: rgba(52, 211, 153, 0.3);
+}
+
+.hirate-hero-stage-badge.badge-pending {
+  background: rgba(245, 158, 11, 0.2);
+  color: #FBBF24;
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
+.hirate-hero-stage-badge.badge-review {
+  background: rgba(99, 102, 241, 0.2);
+  color: #A5B4FC;
+  border-color: rgba(165, 180, 252, 0.3);
+}
+
+.hirate-hero-stage-badge.badge-notstarted {
+  background: rgba(148, 163, 184, 0.2);
+  color: #CBD5E1;
+  border-color: rgba(203, 213, 225, 0.3);
+}
+
+/* Demo Data Notice in Hero */
+.hirate-hero-demo-notice {
+  margin-top: 1.25rem;
+  padding: 0.5rem 0.85rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.775rem;
+  color: rgba(255, 255, 255, 0.85);
+  position: relative;
+  z-index: 2;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.hirate-demo-badge {
+  background: #0284C7;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+/* 3. Four Project Summary Cards */
+.hirate-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: #FFFFFF;
+}
+
+@media (max-width: 1024px) {
+  .hirate-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .hirate-summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hirate-kpi-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hirate-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(15, 23, 42, 0.06);
+}
+
+.hirate-kpi-card.highlight-blue {
+  border-color: #BFDBFE;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F6FF 100%);
+}
+
+.hirate-kpi-card.highlight-green {
+  border-color: #A7F3D0;
+  background: linear-gradient(180deg, #FFFFFF 0%, #ECFDF5 100%);
+}
+
+.hirate-kpi-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.hirate-kpi-label {
+  font-size: 0.725rem;
+  font-weight: 800;
+  color: #64748B;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.hirate-kpi-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hirate-kpi-value {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.hirate-kpi-unit {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.hirate-kpi-subtext {
+  font-size: 0.75rem;
+  color: #64748B;
+  border-top: 1px dashed #E2E8F0;
+  padding-top: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+/* 4. Three Rating Stages Breakdown Cards */
+.hirate-stages-section {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.hirate-stages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+  .hirate-stages-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hirate-stage-card {
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+  position: relative;
+  overflow: hidden;
+}
+
+.hirate-stage-card.stage-ho {
+  border-left: 5px solid #059669;
+}
+
+.hirate-stage-card.stage-spv-comp {
+  border-left: 5px solid #2563EB;
+}
+
+.hirate-stage-card.stage-spv-pend {
+  border-left: 5px solid #D97706;
+  background: #FFFDF8;
+}
+
+.hirate-stage-card.stage-final {
+  border-left: 5px solid #64748B;
+}
+
+.hirate-stage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+}
+
+.hirate-stage-name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.hirate-stage-status-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.hirate-stage-status-pill.completed {
+  background: #ECFDF5;
+  color: #059669;
+  border: 1px solid #A7F3D0;
+}
+
+.hirate-stage-status-pill.pending {
+  background: #FEF3C7;
+  color: #B45309;
+  border: 1px solid #FCD34D;
+}
+
+.hirate-stage-status-pill.in-review {
+  background: #EEF2FF;
+  color: #4F46E5;
+  border: 1px solid #C7D2FE;
+}
+
+.hirate-stage-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+.hirate-stage-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hirate-stage-detail-row strong {
+  color: #0F172A;
+}
+
+/* 5. Horizontal Daily Rating Timeline */
+.hirate-timeline-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.hirate-timeline-scroll {
+  overflow-x: auto;
+  padding: 1.5rem 0.5rem 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 #F1F5F9;
+}
+
+.hirate-timeline-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.hirate-timeline-scroll::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 4px;
+}
+
+.hirate-timeline-scroll::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+.hirate-timeline-track {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 100%;
+  position: relative;
+  gap: 2.25rem;
+  padding: 0 1.5rem;
+}
+
+.hirate-connecting-line {
+  position: absolute;
+  top: 52px;
+  left: 2rem;
+  right: 2rem;
+  height: 2px;
+  background: linear-gradient(90deg, #CBD5E1 0%, #94A3B8 50%, #CBD5E1 100%);
+  z-index: 1;
+}
+
+.hirate-timeline-node {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  min-width: 145px;
+  transition: all 0.25s ease;
+  padding: 0.25rem;
+}
+
+.hirate-timeline-node:hover {
+  transform: translateY(-3px);
+}
+
+.hirate-timeline-node.selected .hirate-node-bullet {
+  background: #1D4ED8;
+  border-color: #DBEAFE;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+}
+
+.hirate-timeline-node.selected .hirate-node-badge {
+  background: #1D4ED8;
+  color: #FFFFFF;
+  border-color: #1D4ED8;
+}
+
+.hirate-node-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1D4ED8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.65rem;
+  border-radius: 9999px;
+  margin-bottom: 0.75rem;
+  white-space: nowrap;
+}
+
+.hirate-node-bullet {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 3px solid #2563EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.75rem;
+}
+
+.hirate-bullet-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2563EB;
+}
+
+.hirate-node-content-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.03);
+  min-width: 110px;
+}
+
+.hirate-node-day {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.1;
+}
+
+.hirate-node-month {
+  font-size: 0.725rem;
+  font-weight: 700;
+  color: #2563EB;
+  letter-spacing: 0.05em;
+  margin-top: 0.1rem;
+}
+
+.hirate-node-assets-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #059669;
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  margin-top: 0.4rem;
+  white-space: nowrap;
+}
+
+/* 6. Dual Visual Charts & Inspector */
+.hirate-charts-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .hirate-charts-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hirate-chart-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hirate-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.hirate-chart-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.hirate-chart-subtitle {
+  font-size: 0.775rem;
+  color: #64748B;
+  margin-top: 0.2rem;
+}
+
+/* Selected Bar Inspector */
+.hirate-inspector-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .hirate-inspector-card {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.hirate-inspector-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.hirate-inspector-label {
+  font-size: 0.675rem;
+  font-weight: 800;
+  color: #64748B;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.hirate-inspector-val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+/* 7. Detailed Daily Work Table */
+.hirate-table-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.hirate-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.hirate-table-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.hirate-table-subtitle {
+  font-size: 0.775rem;
+  color: #64748B;
+  margin-top: 0.2rem;
+}
+
+.hirate-table-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #F1F5F9;
+  color: #334155;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid #E2E8F0;
+}
+
+.hirate-data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.825rem;
+}
+
+.hirate-data-table th {
+  background: #F8FAFC;
+  color: #475569;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #E2E8F0;
+  border-bottom: 1px solid #CBD5E1;
+  text-align: left;
+}
+
+.hirate-data-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #F1F5F9;
+  color: #334155;
+  transition: background-color 0.15s ease;
+}
+
+.hirate-data-table tr:hover td {
+  background-color: #F8FAFC;
+}
+
+.hirate-data-table tr.row-selected td {
+  background-color: #EFF6FF;
+  border-bottom-color: #BFDBFE;
+}
+
+.hirate-stage-badge-small {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.hirate-stage-badge-small.ho {
+  background: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+}
+
+.hirate-stage-badge-small.spv {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+}
+
+.hirate-stage-badge-small.final {
+  background: #F1F5F9;
+  color: #334155;
+  border: 1px solid #CBD5E1;
+}
+
+.hirate-asset-count-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.75rem;
+}

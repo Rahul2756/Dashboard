@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { DataProcessing } from './pages/DataProcessing';
-import { UnderProgress } from './components/UnderProgress';
 import { ProjectUpdate } from './pages/ProjectUpdate';
 import { TranacUpdate } from './pages/TranacUpdate';
+import { HiRATEStatus } from './pages/HiRATEStatus';
 function App() {
   const [activeSection, setActiveSection] = useState(1);
   const [lastUpdated, setLastUpdated] = useState(new Date().toLocaleString());
@@ -23,11 +23,7 @@ function App() {
       case 3:
         return <ProjectUpdate />;
       case 4:
-        return <UnderProgress title="4. HiRATE Status" />;
-      case 5:
-        return <UnderProgress title="5. NTRO Report" />;
-      case 6:
-        return <UnderProgress title="6. Training Programme L0 Syllabus" />;
+        return <HiRATEStatus key={lastUpdated} />;
       default:
         return <DataProcessing />;
     }
@@ -41,15 +37,14 @@ function App() {
           subtitle: "Overview of systems, seating capacity and people allocation"
         };
       case 2:
-        return { title: "2. TraNac Update", subtitle: "Status and updates for TraNac" };
+        return { 
+          title: "2. TRaNac — Data Inflow & Processing Timeline", 
+          subtitle: "Toll Plaza Survey Monitoring, Data Receipt & Processing Deadlines" 
+        };
       case 3:
         return { title: "3. E-NEXCO Pavement Analysis Update", subtitle: "Pavement analysis status" };
       case 4:
-        return { title: "4. HiRATE Status", subtitle: "Current status of HiRATE" };
-      case 5:
-        return { title: "5. NTRO Report", subtitle: "Monthly NTRO reporting" };
-      case 6:
-        return { title: "6. Training Programme L0 Syllabus", subtitle: "Training and syllabus updates" };
+        return { title: "4. HiRATE Status", subtitle: "Highway Signboard & Asset Rating Status" };
       default:
         return { title: "Dashboard", subtitle: "Overview" };
     }

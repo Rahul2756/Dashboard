@@ -10,7 +10,7 @@ export interface Employee {
 export interface AvailableDate {
   colIdx: number;
   label: string;
-  rawValue: number | string;
+  rawValue?: number | string;
 }
 
 export interface ExcelParseResult {

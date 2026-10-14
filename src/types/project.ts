@@ -1,6 +1,7 @@
 export interface ProjectRecord {
   id: string;
   projectName: string;
+  fullProjectName?: string;
   chainageStart: number;
   chainageEnd: number;
   lanes: number;

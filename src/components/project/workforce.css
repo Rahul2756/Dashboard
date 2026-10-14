@@ -1,0 +1,1094 @@
+/* ==========================================================================
+   Project-Wise Daily Workforce Timeline & Monitoring Styles
+   Corporate Highway Engineering Dashboard Aesthetics
+   ========================================================================== */
+
+.workforce-enhanced-card {
+  padding: 2rem !important;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: var(--color-surface, #ffffff);
+  border: 1px solid var(--color-border, #E2E8E5);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* 1. Header Styles */
+.workforce-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.workforce-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.workforce-badge-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.workforce-project-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1D4ED8;
+  background: #DBEAFE;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
+.workforce-header-subtitle {
+  font-size: 0.85rem;
+  color: #64748B;
+  margin-top: 0.25rem;
+}
+
+.workforce-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.workforce-export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #FFFFFF;
+  color: #1E293B;
+  border: 1px solid #CBD5E1;
+  padding: 0.55rem 1rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.workforce-export-btn:hover:not(:disabled) {
+  background-color: #F8FAFC;
+  border-color: #94A3B8;
+  color: #0F172A;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.workforce-export-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Demo Notice Banner */
+.workforce-demo-notice-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F0F9FF;
+  border: 1px solid #BAE6FD;
+  border-left: 4px solid #0284C7;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.workforce-demo-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  background: #0284C7;
+  color: #FFFFFF;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+/* 2. Four Summary KPI Cards */
+.workforce-summary-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+  .workforce-summary-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .workforce-summary-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.workforce-kpi-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 1.25rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.workforce-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(15, 23, 42, 0.07);
+  border-color: #CBD5E1;
+}
+
+.workforce-kpi-card.active-metric {
+  border-color: #BFDBFE;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+  position: relative;
+}
+
+.workforce-kpi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.workforce-kpi-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748B;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.workforce-kpi-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workforce-kpi-value {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.workforce-kpi-unit {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.workforce-kpi-footer {
+  font-size: 0.75rem;
+  color: #64748B;
+  border-top: 1px dashed #E2E8F0;
+  padding-top: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+/* 3. Section Labels */
+.workforce-subsection-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #475569;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.workforce-hint-text {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #94A3B8;
+  text-transform: none;
+  letter-spacing: normal;
+  margin-left: auto;
+}
+
+/* Milestone Wrapper */
+.workforce-milestones-wrapper {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+}
+
+/* 4. Horizontal Daily Workforce Timeline */
+.workforce-timeline-container {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.workforce-horizontal-scroll {
+  overflow-x: auto;
+  padding: 1.5rem 0.5rem 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 #F1F5F9;
+}
+
+.workforce-horizontal-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.workforce-horizontal-scroll::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 4px;
+}
+
+.workforce-horizontal-scroll::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+.workforce-horizontal-scroll::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+.workforce-timeline-track {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 100%;
+  position: relative;
+  gap: 2.5rem;
+  padding: 0 1.5rem;
+}
+
+.workforce-connecting-line {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  right: 2rem;
+  height: 2px;
+  background: linear-gradient(90deg, #CBD5E1 0%, #94A3B8 50%, #CBD5E1 100%);
+  z-index: 1;
+}
+
+.workforce-timeline-node {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  min-width: 130px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0.5rem 0.25rem;
+}
+
+.workforce-timeline-node:hover {
+  transform: translateY(-3px);
+}
+
+.workforce-timeline-node.selected .workforce-node-bullet {
+  background: #1D4ED8;
+  border-color: #DBEAFE;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+}
+
+.workforce-timeline-node.selected .workforce-node-count-badge {
+  background: #1D4ED8;
+  color: #FFFFFF;
+  border-color: #1D4ED8;
+  box-shadow: 0 4px 8px rgba(29, 78, 216, 0.25);
+}
+
+.workforce-timeline-node.selected .workforce-node-date-box {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+}
+
+/* Count Badge (Top) */
+.workforce-node-count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1D4ED8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.7rem;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  margin-bottom: 0.75rem;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+/* Bullet Marker (Middle) */
+.workforce-node-bullet {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 3px solid #2563EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  margin-bottom: 0.75rem;
+}
+
+.workforce-bullet-inner {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2563EB;
+}
+
+/* Date Box (Bottom) */
+.workforce-node-date-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.03);
+  transition: all 0.2s ease;
+  min-width: 90px;
+}
+
+.workforce-date-day {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.1;
+}
+
+.workforce-date-month {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #2563EB;
+  letter-spacing: 0.05em;
+  margin-top: 0.1rem;
+}
+
+.workforce-date-year {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: #94A3B8;
+}
+
+/* Status Chip */
+.workforce-node-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #059669;
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  white-space: nowrap;
+}
+
+.status-dot-green {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+}
+
+/* 5. Chart & Inspector Section */
+.workforce-chart-section {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.workforce-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.workforce-chart-title {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.01em;
+}
+
+.workforce-chart-subtitle {
+  font-size: 0.8rem;
+  color: #64748B;
+  margin-top: 0.2rem;
+}
+
+.workforce-chart-active-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1E40AF;
+  font-size: 0.75rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+}
+
+.indicator-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2563EB;
+  box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+  animation: pulseBlue 1.8s infinite;
+}
+
+@keyframes pulseBlue {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(37, 99, 235, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+
+.workforce-chart-with-inspector {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+@media (max-width: 1024px) {
+  .workforce-chart-with-inspector {
+    grid-template-columns: 1fr;
+  }
+}
+
+.workforce-chart-container {
+  min-height: 290px;
+  background: #FAFAFA;
+  border: 1px solid #F1F5F9;
+  border-radius: 8px;
+  padding: 1rem 0.5rem 0.25rem;
+}
+
+/* Tooltip */
+.workforce-custom-tooltip {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  border: 1px solid #334155;
+  max-width: 280px;
+}
+
+.tooltip-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #93C5FD;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 0.35rem;
+}
+
+.tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+  color: #CBD5E1;
+}
+
+.tooltip-row.highlight {
+  color: #FFFFFF;
+  font-size: 0.85rem;
+}
+
+.tooltip-row.cumulative {
+  margin-top: 0.35rem;
+  padding-top: 0.35rem;
+  border-top: 1px dashed #334155;
+  color: #34D399;
+}
+
+.tooltip-activity {
+  color: #F8FAFC;
+  text-align: right;
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tooltip-status {
+  color: #34D399;
+  font-weight: 600;
+}
+
+/* Inspector Card */
+.workforce-inspector-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  justify-content: space-between;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.workforce-inspector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 0.65rem;
+}
+
+.inspector-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  background: #1E293B;
+  color: #FFFFFF;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.inspector-date {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.inspector-metric-block {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 0.85rem;
+}
+
+.inspector-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #64748B;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+}
+
+.inspector-headcount {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.inspector-count {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #1D4ED8;
+  line-height: 1;
+}
+
+.inspector-sub {
+  font-size: 0.8rem;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.inspector-detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.inspector-activity-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1E293B;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.inspector-remarks-text {
+  font-size: 0.775rem;
+  color: #475569;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.workforce-view-roster-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: #1D4ED8;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(29, 78, 216, 0.25);
+  margin-top: 0.25rem;
+}
+
+.workforce-view-roster-btn:hover {
+  background: #1E40AF;
+  box-shadow: 0 2px 5px rgba(29, 78, 216, 0.35);
+}
+
+/* 6. Detailed Daily Work Table */
+.workforce-table-wrapper {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.workforce-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.workforce-table-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.workforce-table-subtitle {
+  font-size: 0.775rem;
+  color: #64748B;
+  display: block;
+  margin-top: 0.2rem;
+}
+
+.workforce-records-count-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #F1F5F9;
+  color: #334155;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid #E2E8F0;
+}
+
+.workforce-table-container {
+  overflow-x: auto;
+}
+
+.workforce-data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.825rem;
+}
+
+.workforce-data-table th {
+  background: #F8FAFC;
+  color: #475569;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #E2E8F0;
+  border-bottom: 1px solid #CBD5E1;
+  text-align: left;
+}
+
+.workforce-data-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #F1F5F9;
+  color: #334155;
+  transition: background-color 0.15s ease;
+}
+
+.workforce-data-table tr:hover td {
+  background-color: #F8FAFC;
+}
+
+.workforce-data-table tr.row-selected td {
+  background-color: #EFF6FF;
+  border-bottom-color: #BFDBFE;
+}
+
+.workforce-employee-count-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.775rem;
+}
+
+.workforce-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.workforce-status-pill.status-recorded {
+  background: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+}
+
+.workforce-activity-cell {
+  font-weight: 600;
+  color: #1E293B;
+  max-width: 280px;
+  display: inline-block;
+  line-height: 1.35;
+}
+
+.workforce-remarks-cell {
+  color: #64748B;
+  font-size: 0.8rem;
+  max-width: 250px;
+  display: inline-block;
+  line-height: 1.3;
+}
+
+.workforce-table-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #1D4ED8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.workforce-table-action-btn:hover {
+  background: #EFF6FF;
+  border-color: #93C5FD;
+}
+
+/* Empty State */
+.workforce-empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: #F8FAFC;
+  border: 1px dashed #CBD5E1;
+  border-radius: 12px;
+}
+
+.empty-state-icon-box {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.empty-state-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state-desc {
+  font-size: 0.85rem;
+  color: #64748B;
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Employee Roster Modal Styles
+   ========================================================================== */
+
+.workforce-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.workforce-modal-dialog {
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+  width: 100%;
+  max-width: 720px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #CBD5E1;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.97) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.workforce-modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #E2E8F0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workforce-modal-icon-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #EFF6FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workforce-modal-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.workforce-modal-subtitle {
+  font-size: 0.775rem;
+  color: #64748B;
+  margin-top: 0.15rem;
+}
+
+.workforce-modal-close-btn {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.workforce-modal-close-btn:hover {
+  background: #F1F5F9;
+  color: #0F172A;
+}
+
+.workforce-modal-activity-banner {
+  background: #FFFBEB;
+  border-top: 1px solid #FEF3C7;
+  border-bottom: 1px solid #FEF3C7;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.workforce-search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #F8FAFC;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.workforce-search-input {
+  border: none;
+  background: transparent;
+  font-size: 0.8rem;
+  color: #0F172A;
+  width: 100%;
+  outline: none;
+}
+
+.workforce-demo-notice-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #F0F9FF;
+  border: 1px solid #BAE6FD;
+  color: #0369A1;
+  font-size: 0.725rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+}
+
+.workforce-modal-content {
+  padding: 0 1.5rem 1rem;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.workforce-roster-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.825rem;
+}
+
+.workforce-roster-table th {
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748B;
+  border-bottom: 1px solid #E2E8F0;
+  position: sticky;
+  top: 0;
+  background: #FFFFFF;
+}
+
+.workforce-roster-table td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid #F1F5F9;
+  vertical-align: middle;
+}
+
+.workforce-avatar-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #EFF6FF;
+  color: #1D4ED8;
+  font-weight: 700;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workforce-id-code {
+  font-family: monospace;
+  font-size: 0.75rem;
+  background: #F1F5F9;
+  color: #334155;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+}
+
+.workforce-roster-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.workforce-roster-badge.active {
+  background: #ECFDF5;
+  color: #065F46;
+}
+
+.workforce-no-roster-box {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  background: #F8FAFC;
+  border-radius: 12px;
+  border: 1px dashed #CBD5E1;
+}
+
+.workforce-modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #E2E8F0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F8FAFC;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.workforce-btn-secondary {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #334155;
+  padding: 0.45rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.workforce-btn-secondary:hover {
+  background: #F1F5F9;
+  border-color: #94A3B8;
+  color: #0F172A;
+}

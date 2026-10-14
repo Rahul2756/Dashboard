@@ -719,8 +719,9 @@ body {
 
 .modal-container {
   background: var(--color-surface);
-  width: 90%;
-  max-width: 600px;
+  width: 95%;
+  max-width: 1000px;
+  height: 85vh;
   max-height: 90vh;
   border-radius: var(--radius-xl);
   box-shadow: 0 20px 25px -5px rgba(11, 93, 59, 0.1), 0 10px 10px -5px rgba(11, 93, 59, 0.04);
@@ -784,7 +785,7 @@ body {
 
 .modal-stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
   padding: 1.5rem 2rem;
   background-color: var(--color-surface);

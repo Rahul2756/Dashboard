@@ -4,6 +4,7 @@ export const mockProjects: ProjectRecord[] = [
   {
     id: 'proj-1',
     projectName: 'GAEPL',
+    fullProjectName: 'Ghaziabad Aligarh Expressway Private Limited',
     chainageStart: 23.600,
     chainageEnd: 149.500,
     lanes: 6,

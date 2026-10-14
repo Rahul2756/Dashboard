@@ -1,13 +1,15 @@
 import React, { useState, useMemo } from 'react';
 import { 
-  CheckCircle2, AlertCircle, Clock, CheckCircle, CircleDashed,
-  Route, MapPin, Activity, ListChecks, Download
+  CheckCircle2, AlertCircle, Clock, CircleDashed,
+  Route, Download
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import { mockProjects } from '../services/mockProjectData';
 import { getReportStatus, formatDate } from '../utils/dateUtils';
-import { ProjectRecord, ReportStatus } from '../types/project';
+import { ProjectRecord } from '../types/project';
 import { CustomDropdown } from '../components/CustomDropdown';
+import { DailyWorkforceSection } from '../components/project/DailyWorkforceSection';
+import { getProjectWorkforce } from '../services/workforceService';
 
 export const ProjectUpdate: React.FC = () => {
   const [projects, setProjects] = useState<ProjectRecord[]>(mockProjects);
@@ -33,7 +35,23 @@ export const ProjectUpdate: React.FC = () => {
     }));
     const ws = XLSX.utils.json_to_sheet(wsData);
     XLSX.utils.book_append_sheet(wb, ws, "Projects");
-    XLSX.writeFile(wb, "Project_Updates.xlsx");
+
+    // Also include Daily Workforce records for selected project
+    const wfSummary = getProjectWorkforce(selectedProject.projectName);
+    if (wfSummary.records.length > 0) {
+      const wsWorkforce = XLSX.utils.json_to_sheet(wfSummary.records.map(r => ({
+        'Project Code': r.projectCode,
+        'Work Date': r.displayDate || r.workDate,
+        'Employees Working': r.employeeCount,
+        'Work Activity': r.workActivity || '',
+        'Work Status': r.workStatus,
+        'Cumulative Assignments': r.cumulativeAssignments,
+        'Remarks': r.remarks || ''
+      })));
+      XLSX.utils.book_append_sheet(wb, wsWorkforce, "Daily Workforce");
+    }
+
+    XLSX.writeFile(wb, `Project_Updates_${selectedProject.projectName}.xlsx`);
   };
 
   const selectedProject = projects.find(p => p.id === selectedProjectId) || projects[0];
@@ -52,34 +70,40 @@ export const ProjectUpdate: React.FC = () => {
   const ruttingStatus = getReportStatus(selectedProject.dataUpdatedEnexco, selectedProject.ruttingCompleted, SLAs.Rutting);
   const pavementStatus = getReportStatus(selectedProject.dataUpdatedEnexco, selectedProject.pavementEvalCompleted, SLAs.PavementEval);
 
-  // Summary Metrics
-  const summary = useMemo(() => {
-    let completed = 0;
-    let inProgress = 0;
-    let onTime = 0;
-    let delayed = 0;
-    let overdue = 0;
-    let notStarted = 0;
 
-    projects.forEach(p => {
-      const stats = [
-        getReportStatus(p.dataUpdatedEnexco, p.roughnessCompleted, SLAs.Roughness),
-        getReportStatus(p.dataUpdatedEnexco, p.ruttingCompleted, SLAs.Rutting),
-        getReportStatus(p.dataUpdatedEnexco, p.pavementEvalCompleted, SLAs.PavementEval)
-      ];
-
-      stats.forEach(s => {
-        if (s.status.includes('Completed')) completed++;
-        if (s.status.includes('In Progress')) inProgress++;
-        if (s.status === 'Completed On Time') onTime++;
-        if (s.status === 'Delayed') delayed++;
-        if (s.status === 'In Progress – SLA Overdue') overdue++;
-        if (s.status === 'Not Started') notStarted++;
-      });
+  const currentProjectStats = useMemo(() => {
+    let completedNames: string[] = [];
+    let inProgressNames: string[] = [];
+    let delayedNames: string[] = [];
+    
+    const stats = [
+      { name: 'Roughness', obj: roughnessStatus },
+      { name: 'Rutting', obj: ruttingStatus },
+      { name: 'Pavement Eval', obj: pavementStatus }
+    ];
+    
+    stats.forEach(s => {
+      if (s.obj.status === 'Completed On Time' || s.obj.status === 'Delayed') {
+        completedNames.push(s.name);
+      } else if (s.obj.status === 'In Progress – SLA Overdue') {
+        delayedNames.push(s.name);
+      } else if (s.obj.status === 'In Progress – Within SLA') {
+        inProgressNames.push(s.name);
+      }
     });
+    
+    return { 
+      completed: completedNames.length, 
+      inProgress: inProgressNames.length, 
+      delayed: delayedNames.length, 
+      total: 3,
+      completedNames,
+      inProgressNames,
+      delayedNames
+    };
+  }, [roughnessStatus, ruttingStatus, pavementStatus]);
 
-    return { total: projects.length, completed, inProgress, onTime, delayed, overdue, notStarted };
-  }, [projects]);
+  const progressPercent = Math.round((currentProjectStats.completed / currentProjectStats.total) * 100);
 
   const getStatusColor = (status: string) => {
     if (status.includes('On Time')) return 'var(--color-primary-light)';
@@ -189,127 +213,8 @@ export const ProjectUpdate: React.FC = () => {
 
   return (
     <div className="page-container update-section">
-      
-      {/* Dashboard Summary Cards */}
-      <div className="summary-grid">
-        <div className="summary-card">
-          <div className="sc-header">
-            <span className="sc-label">Total Projects</span>
-            <div className="sc-icon"><MapPin size={18} /></div>
-          </div>
-          <span className="sc-value">{summary.total}</span>
-        </div>
-        <div className="summary-card">
-          <div className="sc-header">
-            <span className="sc-label">Reports Completed</span>
-            <div className="sc-icon"><CheckCircle size={18} /></div>
-          </div>
-          <span className="sc-value">{summary.completed}</span>
-        </div>
-        <div className="summary-card">
-          <div className="sc-header">
-            <span className="sc-label">In Progress</span>
-            <div className="sc-icon"><Activity size={18} /></div>
-          </div>
-          <span className="sc-value">{summary.inProgress}</span>
-        </div>
-        <div className="summary-card" style={{ borderBottom: '3px solid var(--color-primary-light)' }}>
-          <div className="sc-header">
-            <span className="sc-label">Completed On Time</span>
-            <div className="sc-icon"><ListChecks size={18} /></div>
-          </div>
-          <span className="sc-value">{summary.onTime}</span>
-        </div>
-        <div className="summary-card" style={{ borderBottom: '3px solid var(--color-danger-text)' }}>
-          <div className="sc-header">
-            <span className="sc-label">Delayed / Overdue</span>
-            <div className="sc-icon"><AlertCircle size={18} /></div>
-          </div>
-          <span className="sc-value">{summary.delayed + summary.overdue}</span>
-        </div>
-      </div>
-
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 className="section-heading">Project Detailed View</h2>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <div style={{ width: '300px' }}>
-            <CustomDropdown 
-              value={selectedProjectId}
-              onChange={setSelectedProjectId}
-              options={projects.map(p => ({ value: p.id, label: p.projectName }))}
-            />
-          </div>
-          <button onClick={handleExport} className="export-btn">
-            <Download size={18} />
-            Export to Excel
-          </button>
-        </div>
-      </div>
-
-      {/* Project Header */}
-      <div className="project-header-card">
-        <div className="ph-title-row">
-          <Route size={24} color="#FFFFFF" />
-          <h3>PROJECT: {selectedProject.projectName}</h3>
-        </div>
-        <div className="ph-stats">
-          <div className="ph-stat">
-            <span className="phs-label">Chainage</span>
-            <span className="phs-value">{selectedProject.chainageStart.toFixed(3)} km → {selectedProject.chainageEnd.toFixed(3)} km</span>
-          </div>
-          <div className="ph-stat">
-            <span className="phs-label">Total Length</span>
-            <span className="phs-value">{totalLength} km</span>
-          </div>
-          <div className="ph-stat">
-            <span className="phs-label">No. of Lanes</span>
-            <span className="phs-value">{selectedProject.lanes}</span>
-          </div>
-          <div className="ph-stat">
-            <span className="phs-label">Total Lane Length</span>
-            <span className="phs-value">{totalLaneLength} km</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Timeline */}
-      <div className="highway-timeline-card">
-        <h4 className="timeline-title">Processing Timeline</h4>
-        <div className="highway-timeline">
-          {[
-            { label: 'Survey Starting', date: selectedProject.surveyStarting },
-            { label: 'Survey Ending', date: selectedProject.surveyEnding },
-            { label: 'Data Received', date: selectedProject.dataReceived },
-            { label: 'E-NEXCO Updated', date: selectedProject.dataUpdatedEnexco },
-            { label: 'Roughness', date: selectedProject.roughnessCompleted, status: roughnessStatus },
-            { label: 'Rutting', date: selectedProject.ruttingCompleted, status: ruttingStatus },
-            { label: 'Pavement Eval.', date: selectedProject.pavementEvalCompleted, status: pavementStatus }
-          ].map((node, i) => (
-            <div key={i} className="timeline-node" style={{ color: node.date ? (node.status ? getStatusColor(node.status.status) : 'var(--color-primary)') : 'var(--color-text-tertiary)' }}>
-              <div className="tn-marker" />
-              <div className="tn-content-signboard">
-                <span className="tn-label" style={{ color: 'var(--color-text-primary)' }}>{node.label}</span>
-                <span className="tn-date">{formatDate(node.date)}</span>
-                {node.status && node.status.status !== 'Not Started' && (
-                  <span className="tn-status" style={{ color: getStatusColor(node.status.status) }}>
-                    {node.status.status}
-                  </span>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Report Cards */}
-      <div className="reports-grid">
-        {renderReportCard('ROUGHNESS', SLAs.Roughness, selectedProject.roughnessCompleted, roughnessStatus)}
-        {renderReportCard('RUTTING', SLAs.Rutting, selectedProject.ruttingCompleted, ruttingStatus)}
-        {renderReportCard('PAVEMENT EVALUATION', SLAs.PavementEval, selectedProject.pavementEvalCompleted, pavementStatus)}
-      </div>
-
       {/* Project Wise Status Table */}
-      <div className="table-section" style={{ marginTop: '2rem' }}>
+      <div className="table-section" style={{ marginBottom: '2rem' }}>
         <div className="table-header">
           <h3 className="table-title">Project-Wise Status Overview</h3>
         </div>
@@ -361,6 +266,161 @@ export const ProjectUpdate: React.FC = () => {
           </table>
         </div>
       </div>
+      
+
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2rem', marginBottom: '1rem' }}>
+        <h2 className="section-heading" style={{ margin: 0 }}>Project Detailed View</h2>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1rem' }}>
+          <button onClick={handleExport} className="export-btn" style={{ height: '38px', padding: '0 1rem' }}>
+            <Download size={16} /> Export
+          </button>
+          <div>
+            <span style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-secondary)', marginBottom: '0.25rem' }}>SELECT PROJECT</span>
+            <div style={{ width: '250px' }}>
+              <CustomDropdown 
+                value={selectedProjectId}
+                onChange={setSelectedProjectId}
+                options={projects.map(p => ({ value: p.id, label: p.projectName }))}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="summary-card" style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {/* Header Banner */}
+        <div style={{ 
+          padding: '2rem 1.5rem',
+          backgroundImage: 'linear-gradient(to right, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.4)), url("https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          color: 'white',
+          borderBottom: '1px solid var(--color-border)'
+        }}>
+          <h2 style={{ fontSize: '0.875rem', fontWeight: 600, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1rem' }}>Overall Project Details</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div style={{ backgroundColor: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', padding: '0.75rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.2)' }}>
+              <Route size={32} color="#ffffff" />
+            </div>
+            <div>
+              <h3 style={{ fontSize: '1.75rem', fontWeight: 700, margin: 0, color: '#ffffff', letterSpacing: '-0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>{selectedProject.projectName}</h3>
+              {selectedProject.fullProjectName && (
+                <p style={{ margin: 0, fontSize: '1rem', color: 'rgba(255,255,255,0.85)', marginTop: '0.25rem', textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>{selectedProject.fullProjectName}</p>
+              )}
+              <p style={{ margin: 0, fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginTop: '0.35rem' }}>
+                Chainage: km {selectedProject.chainageStart.toFixed(3)} - {selectedProject.chainageEnd.toFixed(3)} • Length: {totalLength} km ({totalLaneLength} lane-km, {selectedProject.lanes} Lanes)
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Content Section */}
+        <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', backgroundColor: 'var(--color-bg-primary)' }}>
+
+
+        {/* Stats Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1.5rem' }}>
+          <div>
+            <span style={{ display: 'block', fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginBottom: '0.25rem' }}>Data Received</span>
+            <span style={{ fontSize: '1.125rem', fontWeight: 600 }}>{selectedProject.dataReceived ? formatDate(selectedProject.dataReceived) : 'N/A'}</span>
+          </div>
+          <div>
+            <span style={{ display: 'block', fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginBottom: '0.25rem' }}>Data Updated</span>
+            <span style={{ fontSize: '1.125rem', fontWeight: 600 }}>{selectedProject.dataUpdatedEnexco ? formatDate(selectedProject.dataUpdatedEnexco) : 'N/A'}</span>
+          </div>
+          <div 
+            style={{ cursor: 'pointer' }} 
+            onClick={() => document.getElementById('reports-grid')?.scrollIntoView({ behavior: 'smooth' })}
+            title="View details"
+          >
+            <span style={{ display: 'block', fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginBottom: '0.25rem' }}>Total Activities</span>
+            <span style={{ fontSize: '1.125rem', fontWeight: 600 }}>{currentProjectStats.total}</span>
+          </div>
+          <div 
+            style={{ cursor: 'pointer' }} 
+            onClick={() => document.getElementById('reports-grid')?.scrollIntoView({ behavior: 'smooth' })}
+            title="View details"
+          >
+            <span style={{ display: 'block', fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginBottom: '0.25rem' }}>On time completed</span>
+            <span style={{ fontSize: '1.125rem', fontWeight: 600, color: 'var(--color-primary-light)' }}>{currentProjectStats.completed}</span>
+            {currentProjectStats.completedNames.length > 0 && (
+              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary)', marginTop: '0.25rem' }}>
+                {currentProjectStats.completedNames.join(', ')}
+              </div>
+            )}
+          </div>
+          <div 
+            style={{ cursor: 'pointer' }} 
+            onClick={() => document.getElementById('reports-grid')?.scrollIntoView({ behavior: 'smooth' })}
+            title="View details"
+          >
+            <span style={{ display: 'block', fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginBottom: '0.25rem' }}>In Progress</span>
+            <span style={{ fontSize: '1.125rem', fontWeight: 600, color: '#F59E0B' }}>{currentProjectStats.inProgress}</span>
+            {currentProjectStats.inProgressNames.length > 0 && (
+              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary)', marginTop: '0.25rem' }}>
+                {currentProjectStats.inProgressNames.join(', ')}
+              </div>
+            )}
+          </div>
+          <div 
+            style={{ cursor: 'pointer' }} 
+            onClick={() => document.getElementById('reports-grid')?.scrollIntoView({ behavior: 'smooth' })}
+            title="View details"
+          >
+            <span style={{ display: 'block', fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginBottom: '0.25rem' }}>Delayed</span>
+            <span style={{ fontSize: '1.125rem', fontWeight: 600, color: 'var(--color-danger-text)' }}>{currentProjectStats.delayed}</span>
+            {currentProjectStats.delayedNames.length > 0 && (
+              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary)', marginTop: '0.25rem' }}>
+                {currentProjectStats.delayedNames.join(', ')}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div style={{ height: '1px', backgroundColor: 'var(--color-border)', width: '100%' }} />
+
+        {/* Progress */}
+        <div>
+          <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem' }}>Analysis Progress</h4>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>{currentProjectStats.completed} / {currentProjectStats.total} Activities Completed</span>
+            <span style={{ fontSize: '1rem', fontWeight: 700 }}>{progressPercent}%</span>
+          </div>
+          <div style={{ width: '100%', height: '8px', backgroundColor: 'var(--color-bg-tertiary)', borderRadius: '4px', overflow: 'hidden', display: 'flex' }}>
+            {currentProjectStats.completed > 0 && <div style={{ width: `${(currentProjectStats.completed / currentProjectStats.total) * 100}%`, backgroundColor: 'var(--color-primary-light)' }} />}
+            {currentProjectStats.inProgress > 0 && <div style={{ width: `${(currentProjectStats.inProgress / currentProjectStats.total) * 100}%`, backgroundColor: '#F59E0B' }} />}
+            {currentProjectStats.delayed > 0 && <div style={{ width: `${(currentProjectStats.delayed / currentProjectStats.total) * 100}%`, backgroundColor: 'var(--color-danger-text)' }} />}
+          </div>
+        </div>
+      </div>
+      </div>
+
+      {/* Processing Timeline & Daily Workforce Section */}
+      <DailyWorkforceSection 
+        projectId={selectedProject.id}
+        projectName={selectedProject.projectName}
+        milestoneNodes={[
+          { label: 'Survey Starting', date: selectedProject.surveyStarting },
+          { label: 'Survey Ending', date: selectedProject.surveyEnding },
+          { label: 'Data Received', date: selectedProject.dataReceived },
+          { label: 'E-NEXCO Updated', date: selectedProject.dataUpdatedEnexco },
+          { label: 'Roughness', date: selectedProject.roughnessCompleted, status: roughnessStatus },
+          { label: 'Rutting', date: selectedProject.ruttingCompleted, status: ruttingStatus },
+          { label: 'Pavement Eval.', date: selectedProject.pavementEvalCompleted, status: pavementStatus }
+        ]}
+        formatDate={formatDate}
+        getStatusColor={getStatusColor}
+      />
+
+      {/* Report Cards */}
+      <div id="reports-grid" className="reports-grid">
+        {renderReportCard('ROUGHNESS', SLAs.Roughness, selectedProject.roughnessCompleted, roughnessStatus)}
+        {renderReportCard('RUTTING', SLAs.Rutting, selectedProject.ruttingCompleted, ruttingStatus)}
+        {renderReportCard('PAVEMENT EVALUATION', SLAs.PavementEval, selectedProject.pavementEvalCompleted, pavementStatus)}
+      </div>
+
+
     </div>
   );
 };

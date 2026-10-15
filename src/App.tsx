@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
+import { LandingPage } from './pages/LandingPage';
 import { DataProcessing } from './pages/DataProcessing';
 import { ProjectUpdate } from './pages/ProjectUpdate';
 import { TranacUpdate } from './pages/TranacUpdate';
 import { HiRATEStatus } from './pages/HiRATEStatus';
+
 function App() {
-  const [activeSection, setActiveSection] = useState(1);
+  const [activeSection, setActiveSection] = useState(0);
   const [lastUpdated, setLastUpdated] = useState(new Date().toLocaleString());
 
   const handleRefresh = () => {
@@ -25,7 +27,7 @@ function App() {
       case 4:
         return <HiRATEStatus key={lastUpdated} />;
       default:
-        return <DataProcessing />;
+        return null;
     }
   };
 
@@ -46,9 +48,14 @@ function App() {
       case 4:
         return { title: "4. HiRATE Status", subtitle: "Highway Signboard & Asset Rating Status" };
       default:
-        return { title: "Dashboard", subtitle: "Overview" };
+        return { title: "Status of TAR Works", subtitle: "Highway Engineering Operations Portal" };
     }
   };
+
+  // If on landing page (activeSection === 0), display full-width landing page with no sidebar
+  if (activeSection === 0) {
+    return <LandingPage onNavigate={(id) => setActiveSection(id)} />;
+  }
 
   const { title, subtitle } = getPageTitles();
 
@@ -60,7 +67,8 @@ function App() {
           title={title} 
           subtitle={subtitle} 
           lastUpdated={lastUpdated} 
-          onRefresh={handleRefresh} 
+          onRefresh={handleRefresh}
+          onBackToHome={() => setActiveSection(0)}
         />
         {renderContent()}
       </main>

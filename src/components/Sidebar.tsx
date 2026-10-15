@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, BarChart2, Map, ClipboardCheck } from 'lucide-react';
+import { Users, BarChart2, Map, ClipboardCheck, ArrowLeft } from 'lucide-react';
 import { clsx } from 'clsx';
 
 interface SidebarProps {
@@ -17,10 +17,24 @@ const navItems = [
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSection }) => {
   return (
     <aside className="sidebar">
-      <div className="sidebar-header">
-        <img src="/logo.png" alt="Cube Tech Logo" className="sidebar-logo-img" />
+      <div 
+        className="sidebar-header" 
+        style={{ cursor: 'pointer' }}
+        onClick={() => setActiveSection(0)}
+        title="Go to Status of TAR Works Portal Home"
+      >
+        <img src="/logo_horizontal.png" alt="Cube Tech Logo" className="sidebar-logo-img" style={{ maxHeight: '42px', width: 'auto' }} />
         <h1 className="sidebar-title">Status of TAR Works</h1>
       </div>
+      <button 
+        type="button" 
+        className="sidebar-home-link"
+        onClick={() => setActiveSection(0)}
+        title="Return to Landing Page"
+      >
+        <ArrowLeft size={16} strokeWidth={2} />
+        <span>Portal Home</span>
+      </button>
       <nav className="sidebar-nav">
         {navItems.map((item) => {
           const Icon = item.icon;
